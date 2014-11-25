@@ -5,6 +5,7 @@ bookingCode = {
         $('#showModal').click(bookingCode.showTagModal);
         $('#createTag').click(bookingCode.createTag);
         $('#tagSearch').on('input', bookingCode.searchTags);
+        $('.form-control').focus(bookingCode.hideBookingStatus);
         bookingCode.getTags();
 
         $('#a1').click(bookingCode.getTags);
@@ -27,7 +28,6 @@ bookingCode = {
             tagIds += $(pendingTags[i]).attr('data-tagId') + ';';
         }
         tagIds = tagIds.slice(0, -1);
-        alert('{"jsonBooking":' + JSON.stringify(data) + ',"tagIds":"' + tagIds + '"}')
         $.ajax({
             type: 'POST',
             url: 'CreateBooking.aspx/CreateBooking',
@@ -35,9 +35,11 @@ bookingCode = {
             contentType: 'application/json; charset=utf-8',
             success: function (response) {
                 if (response.d) {
-                    alert('ajax true')
+                    $('.form-control').not('#tagSearch').val("");
+                    $('#bookingStatus').removeClass('alert-danger').addClass('alert-success').text('The booking was succesfully created');
+                    $('#bookingStatus').parent().show();
                 } else {
-                    alert('ajax false')
+                    $('#bookingStatus').removeClass('alert-success').addClass('alert-danger').text('The booking wasn\'t created please try again');
                 }
             },
             failure: function (response) {
@@ -143,6 +145,9 @@ bookingCode = {
         $('#existingTags').children().show();
         $('#existingTags').children('.tag:not(:contains(' + search + '))').hide();
     },
+    hideBookingStatus:function(){
+        $('#bookingStatus').parent().hide();
+    },
 
     test: function () {
         $.ajax({
@@ -161,6 +166,7 @@ bookingCode = {
             }
         });
     }
+    
 }
 
 jQuery.expr[':'].contains = function (a, i, m) {
