@@ -1,0 +1,146 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Create Booking</title>
+    <script src="../Scripts/jquery-2.1.0.min.js"></script>
+    <script src="../Scripts/bootstrap.min.js"></script>
+    <link href="../Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../Content/bootstrap-theme.min.css" rel="stylesheet" />
+    <script src="../Scripts/LoginCode.js"></script>
+    <script src="../Scripts/CreateBooking.js"></script>
+    <link href="../Content/CustomStyles.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <a id="a1" href="#">Test</a>
+        <div class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="../Index.html">Opgave fordeling</a>
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="../Employee/TaskOverview.html">Task Overview</a></li>
+                        <li class="dropdown">
+                            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Management <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="ManageEmployees.html">Manage Employees</a></li>
+                                <li><a href="AddNewEmployee.html">And New Employee</a></li>
+                                <li class="active"><a href="CreateBooking.html">Create Booking</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <div class="navbar-right">
+                        <ul class="nav navbar-nav navbar-right ">
+                            <li class="dropdown" id="menuLogin">
+                                <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="navLogin">Login</a>
+                                <div class="dropdown-menu" style="padding:17px;">
+                                    <form class="form" id="formLogin">
+                                        <input name="username" id="username" type="text" placeholder="Username">
+                                        <input name="password" id="password" type="password" placeholder="Password"><br>
+                                        <button type="button" id="btnLogin" class="btn">Login</button>
+                                    </form>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div><!--.navbar-->
+        <div class="container">
+            <div class="container col-md-6 col-xs-12">
+                <h1>Create Booking</h1>
+                <form class="form-horizontal" role="form" id="formBooking">
+                    <div class="form-group">
+                        <label class="control-label col-xs-4 col-md-6" for="startDate">Start date:</label>
+                        <div class="col-xs-8 col-md-6">
+                            <input class="form-control" id="startDate" type="date" placeholder="DD-MM-YYYY">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-4 col-md-6" for="estimatedDuration">Estimated duration:</label>
+                        <div class="col-xs-8 col-md-6">
+                            <input class="form-control" id="estimatedDuration" type="text" placeholder="Hours" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-4 col-md-6" for="customerAddress">Customer address:</label>
+                        <div class="col-xs-8 col-md-6">
+                            <input class="form-control" id="customerAddress" type="text" placeholder="Customer address" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-4 col-md-6" for="customerPhonenumber">Customer phonenumber:</label>
+                        <div class="col-xs-8 col-md-6">
+                            <input class="form-control" id="customerPhonenumber" type="text" placeholder="12345678" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-4 col-md-6" for="description">Booking description:</label><br />
+                        <div class="col-xs-12 col-md-6">
+                            <textarea class="form-control" id="description" rows="2" cols="20" placeholder="Description"></textarea>
+                        </div>
+                    </div>
+                    <div id="pendingTags" class="container-fluid tag-container">
+                    </div>
+                    <button id="createBooking" type="button" class="btn pull-right">Create booking</button>
+                </form>
+            </div>
+            <div class="container col-md-6 col-xs-12">
+                <h1>Tags</h1>
+                <form class="form-horizontal" role="form" id="formBooking">
+                    <div class="form-group">
+                        <label class="control-label col-xs-4 col-md-6" for="tagSearch">Search:</label>
+                        <div class="col-xs-8 col-md-6">
+                            <input class="form-control" id="tagSearch" type="text" placeholder="Tag Name">
+                        </div>
+                    </div>
+                </form>
+                <div id="existingTags" class="container-fluid tag-container">
+                </div>
+                <div><button id="showModal" type="button" class="btn pull-right">Create new tag</button></div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal HTML -->
+    <div id="tagModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Create new tag</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form" id="formBooking">
+                        <div class="form-group">
+                            <label class="control-label col-xs-4 col-md-6" for="tagName">Tag name:</label>
+                            <div class="col-xs-8 col-md-6">
+                                <input class="form-control" id="tagName" type="text" placeholder="Tag name" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-4 col-md-6" for="tagDescription">Tag description:</label><br />
+                            <div class="col-xs-12 col-md-6">
+                                <textarea class="form-control" id="tagDescription" rows="2" cols="20" placeholder="Description"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button id="createTag" type="button" class="btn btn-primary">Create Tag</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="tagInfo" hidden="hidden">
+        <div id="tagInfoHead"></div>
+        <div id="tagInfoDescription"></div>
+    </div>
+</body>
+</html>

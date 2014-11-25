@@ -1,0 +1,26 @@
+﻿.tag {
+    /*border: 2px solid #a1a1a1;*/
+    margin: 4px auto;
+    padding: 10px 40px;
+    background: #9BE6FF;
+    border-radius: 26px;
+    display: inline-block;
+    margin-right:4px;
+    cursor: pointer
+}
+
+#tagInfo{
+    width: 200px;
+    border: solid;
+    border-color:black;
+    border-width:2px;
+}
+
+#tagInfoHead{
+    background-color:#008AE6;
+    font-weight: bold;
+}
+
+#tagInfoDescription{
+    background-color:#9BE6FF;
+}
