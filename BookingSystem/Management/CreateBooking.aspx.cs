@@ -15,17 +15,32 @@ public partial class Management_CreateBooking : System.Web.UI.Page {
         //CreateTag(@"{""Name"":""tag0"",""Description"":""tag00""}");
     }
     [WebMethod]
-    public static bool CreateBooking(string jsonBooking, string tagIds) {
-        return true;
+    public static bool CreateBooking(string jsonBooking, int customerId, string tagIds) {
         JavaScriptSerializer jss = new JavaScriptSerializer();
         Booking b = jss.Deserialize<Booking>(jsonBooking);
-        return bookingManager.StoreBooking(b, tagIds);
+        return bookingManager.StoreBooking(b, customerId, tagIds);
+    }
+
+    [WebMethod]
+    public static Customer CreateCustomer(string jsonCustomer) {
+        JavaScriptSerializer jss = new JavaScriptSerializer();
+        Customer c = jss.Deserialize<Customer>(jsonCustomer);
+        return bookingManager.StoreCustomer(c);
+    }
+
+    [WebMethod]
+    public static List<Customer> GetCustomers() {
+        return bookingManager.GetCustomers();
+    }
+
+    [WebMethod]
+    public static Customer GetCustomerById(int customerId) {
+        return bookingManager.GetCustomerById(customerId);
     }
 
     [WebMethod]
     public static List<Tag> GetTags() {
         return bookingManager.GetTags();
-
     }
 
     [WebMethod]
@@ -45,8 +60,6 @@ public partial class Management_CreateBooking : System.Web.UI.Page {
         Booking booking = new Booking() {
             StratDate = DateTime.Now,
             EstimatedDuration = 8.5,
-            CustomerAddress = "vej1",
-            CustomerPhone = 12345678,
             Description = "BlahBlahBlahBlah",
             BookingState = BookingState.INPROGRESS,
             Employee = new Employee() {

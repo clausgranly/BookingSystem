@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
 /// <summary>
-/// Summary description for Employee
+/// Summary description for Customer
 /// </summary>
-public class Employee {
-    public Employee() {
-    }
+public class Customer {
+    public Customer() {
 
+    }
     public int Id {
         get;
         set;
@@ -21,22 +19,15 @@ public class Employee {
         get;
         set;
     }
-
+    public string Address {
+        get;
+        set;
+    }
     public int Phonenumber {
         get;
         set;
     }
-    public List<Booking> Bookings {
-        get;
-        set;
-    }
-
     public string Email {
-        get;
-        set;
-    }
-
-    public User User {
         get;
         set;
     }

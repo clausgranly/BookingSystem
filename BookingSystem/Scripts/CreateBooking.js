@@ -2,26 +2,26 @@
 bookingCode = {
     init: function () {
         $('#createBooking').click(bookingCode.createBooking);
-        $('#showModal').click(bookingCode.showTagModal);
+        $('#showTagModal').click(bookingCode.showTagModal);
         $('#createTag').click(bookingCode.createTag);
         $('#tagSearch').on('input', bookingCode.searchTags);
         $('.form-control').focus(bookingCode.hideBookingStatus);
+        $('#showCustomerModal').click(bookingCode.showCustomerModal);
+        $('#createCustomer').click(bookingCode.createCustomer);
         bookingCode.getTags();
+        bookingCode.getCustomers();
+        $('#selCustomer').change(bookingCode.getCustomerAddress)
 
-        $('#a1').click(bookingCode.getTags);
-        //var lblClass = 'control-label col-xs-4 col-md-6';
-        //var inputClass = 'col-xs-8 col-md-6';
-        //$('label').removeClass().addClass(lblClass);
-        //$('#formBooking input').parent().removeClass().addClass(inputClass);
+        $('#a1').click(bookingCode.test);
     },
     createBooking: function () {
         var start = $('#startDate').val().split('-');
         var startDate = new Date(start[2], start[1] - 1, start[0]).getTime();
         var estimatedDuration = $('#estimatedDuration').val();
-        var description = $('#description').val()
-        var customerAddress = $('#customerAddress').val()
-        var customerPhone = $('#customerPhonenumber').val();
-        var data = '{ "StratDate": "\\\/Date(' + startDate + ')\\\/", "EstimatedDuration": ' + estimatedDuration + ', "Description": "' + description + '", "CustomerAddress": "' + customerAddress + '", "CustomerPhone": ' + customerPhone + '}';
+        var description = $('#description').val();
+        var address = $('#address').val();
+        var josnBooking = '{ "StratDate": "\\\/Date(' + startDate + ')\\\/", "EstimatedDuration": ' + estimatedDuration + ', "Address": "' + address + '", "Description": "' + description + '"}';
+        var customerId = $('#selCustomer').find(":selected").attr('data-customerId');
         var tagIds = '';
         pendingTags = $('#pendingTags').children();
         for (var i = 0; i < pendingTags.length; i++) {
@@ -31,7 +31,7 @@ bookingCode = {
         $.ajax({
             type: 'POST',
             url: 'CreateBooking.aspx/CreateBooking',
-            data: '{"jsonBooking":' + JSON.stringify(data) + ',"tagIds":"' + tagIds + '"}',
+            data: '{"jsonBooking":' + JSON.stringify(josnBooking) + ',"customerId":' + customerId+ ',"tagIds":"' + tagIds + '"}',
             contentType: 'application/json; charset=utf-8',
             success: function (response) {
                 if (response.d) {
@@ -97,6 +97,9 @@ bookingCode = {
     showTagModal: function () {
         $('#tagModal').modal('show');
     },
+    showCustomerModal: function () {
+        $('#customerModal').modal('show');
+    },
     createTag: function () {
         var tagName = $('#tagName').val();
         var tagDescription = $('#tagDescription').val();
@@ -145,28 +148,75 @@ bookingCode = {
         $('#existingTags').children().show();
         $('#existingTags').children('.tag:not(:contains(' + search + '))').hide();
     },
-    hideBookingStatus:function(){
+    hideBookingStatus: function () {
         $('#bookingStatus').parent().hide();
     },
 
-    test: function () {
+
+    createCustomer: function () {
+        var customerName = $('#customerName').val();
+        var customerAddress = $('#customerAddress').val();
+        var customerPhonenumber = $('#customerPhone').val();
+        var customerEmail = $('#customerEmail').val();
+        var customerJson = '{"Name":"' + customerName + '","Address":"' + customerAddress + '","Phonenumber":' + customerPhonenumber + ',"Email":"' + customerEmail + '"}';
         $.ajax({
             type: 'POST',
-            url: 'CreateBooking.aspx/Test',
+            url: 'CreateBooking.aspx/CreateCustomer',
+            data: '{"jsonCustomer":' + JSON.stringify(customerJson) + '}',
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                $('option').removeAttr('selected');
+                $('#selCustomer').prepend($('<option>').attr('selected', 'selected').attr('data-customerId', response.d.Id).text(response.d.Name));
+                $('#address').val(customerAddress);
+                $('#customerModal').modal('hide');
+                $('#customerName').val("");
+                $('#customerAddress').val("");
+                $('#customerPhone').val("");
+                $('#customerEmail').val("");
+            },
+            failure: function (response) {
+                alert('failure ' + response.d)
+            }
+        });
+    },
+    getCustomers: function(){
+        $.ajax({
+            type: 'POST',
+            url: 'CreateBooking.aspx/GetCustomers',
             data: '{}',
             contentType: 'application/json; charset=utf-8',
             success: function (response) {
-                alert(response.d)
-                alert('done')
+                if (response.d) {
+                    for (var i = 0; i < response.d.length; i++) {
+                        $('#selCustomer').append($('<option>').attr('data-customerId', response.d[i].Id).text(response.d[i].Name));
+                    }
+                }
             },
             failure: function (response) {
-                //alert('Failure: ' + response.d);
-                $('<lable>').addClass('alert-danger').html('The username or password was incorrect.<br /> Please try again.').prependTo($('body'))
-                alert('done')
+                alert('Failure: ' + response.d);
             }
         });
-    }
-    
+    },
+
+    getCustomerAddress:function(){
+        var customerId = $('#selCustomer').find(":selected").attr('data-customerId');
+        $.ajax({
+            type: 'POST',
+            url: 'CreateBooking.aspx/GetCustomerById',
+            data: '{"customerId":'+customerId+'}',
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                $('#address').val(response.d.Address);
+            },
+            failure: function (response) {
+                alert('Failure: ' + response.d);
+            }
+        });
+    },
+
+    test: function () {
+        alert($('#selCustomer').find(":selected").text());
+    },
 }
 
 jQuery.expr[':'].contains = function (a, i, m) {

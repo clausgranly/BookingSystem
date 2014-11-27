@@ -29,8 +29,15 @@
                             <a href="#" data-toggle="dropdown" class="dropdown-toggle">Management <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="ManageEmployees.html">Manage Employees</a></li>
-                                <li class="active"><a href="AddNewEmployee.html">And New Employee</a></li>
+                                <li><a href="AddNewEmployee.html">And New Employee</a></li>
                                 <li><a href="CreateBooking.html">Create Booking</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Admin<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li class="active"><a href="../Admin/AddNewEmployee.html">Add New Employee</a></li>
+                                <li><a href="../Admin/ExistingEmployees.html">Manage Existing Employees</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -51,8 +58,51 @@
                 </div>
             </div>
         </div><!--.navbar-->
-        <div>
-            <h1> Text about something</h1>
+        <div class=" = container">
+            <div class="container col-md-6 col-xs-12">
+                <h1>Create new employee</h1>
+                <form class="form-horizontal" role="form" id="formBooking">
+                    <div class="form-group">
+                        <label class="control-label col-xs-4 col-md-6" for="name">Name:</label>
+                        <div class="col-xs-8 col-md-6">
+                            <input class="form-control" id="name" type="text" placeholder="name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-4 col-md-6" for="phonenumber">Phonenumber:</label>
+                        <div class="col-xs-8 col-md-6">
+                            <input class="form-control" id="phonenumber" type="text" placeholder="12345678" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-4 col-md-6" for="email">Email:</label>
+                        <div class="col-xs-8 col-md-6">
+                            <input class="form-control" id="email" type="text" placeholder="mail@domain.dk" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-4 col-md-6" for="newUsername">Username:</label>
+                        <div class="col-xs-8 col-md-6">
+                            <input class="form-control" id="newUsername" type="text" placeholder="Username" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-4 col-md-6" for="newPassword">Password:</label>
+                        <div class="col-xs-8 col-md-6">
+                            <input class="form-control" id="newPassword" type="text" placeholder="mail@domain.dk" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-4 col-md-6" for="roles">Roles:</label>
+                        <div class="col-xs-8 col-md-6">
+                            <input class="form-control" id="roles" type="text" placeholder="role1;role2;role3" />
+                        </div>
+                    </div>
+                    <div>
+                        <button id="createEmployee" type="button" class="btn pull-right">Create Employee</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </body>

@@ -24,7 +24,7 @@ public class BookingManager {
         }
     }
 
-    public bool StoreBooking(Booking booking, string tagIds) {
+    public bool StoreBooking(Booking booking, int customerId, string tagIds) {
         using (DataContext ctx = new DataContext()) {
             try {
                 string[] ids = tagIds.Split(';');
@@ -32,6 +32,7 @@ public class BookingManager {
                     int id = Convert.ToInt32(s);
                     booking.Tags.Add(GetTagById(id, ctx));
                 }
+                booking.Customer = GetCustomerById(customerId, ctx);
                 ctx.Bookings.Add(booking);
                 return ctx.SaveChanges() > 0;
             } catch (Exception e) {
@@ -74,6 +75,38 @@ public class BookingManager {
         }
     }
 
+    public Customer StoreCustomer(Customer customer) {
+        using (DataContext ctx = new DataContext()) {
+            try {
+                ctx.Customers.Add(customer);
+                ctx.SaveChanges();
+                return customer;
+            } catch (Exception e) {
+                throw e;
+            }
+        }
+    }
+
+    public List<Customer> GetCustomers() {
+        using (DataContext ctx = new DataContext()) {
+            try {
+                return ctx.Customers.OrderBy(c => c.Name).ToList();
+            } catch (Exception e) {
+                throw e;
+            }
+        }
+    }
+
+    public Customer GetCustomerById(int id) {
+        using (DataContext ctx = new DataContext()) {
+            try {
+                return GetCustomerById(id, ctx);
+            } catch (Exception e) {
+                throw e;
+            }
+        }
+    }
+
     private Tag GetTagById(int id, DataContext ctx) {
         try {
             return ctx.Tags.Where(t => t.Id == id).FirstOrDefault();
@@ -82,9 +115,11 @@ public class BookingManager {
         }
     }
 
-    private List<Tag> SortTags(List<Tag> tags) {
-        List<Tag> sorted = new List<Tag>();
-
-        return sorted;
+    private Customer GetCustomerById(int id, DataContext ctx) {
+        try {
+            return ctx.Customers.Where(c => c.Id == id).FirstOrDefault();
+        } catch (Exception e) {
+            throw e;
+        }
     }
 }

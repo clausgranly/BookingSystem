@@ -72,8 +72,6 @@ public partial class _Default : System.Web.UI.Page {
             Booking booking = new Booking() {
                 StratDate = DateTime.Now,
                 EstimatedDuration = 8.5,
-                CustomerAddress = "eamv",
-                CustomerPhone = 12345678,
                 Description = "eamv",
             };
             string[] ids = tagIds.Split(';');

@@ -31,8 +31,14 @@
                             <a href="#" data-toggle="dropdown" class="dropdown-toggle">Management <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="ManageEmployees.html">Manage Employees</a></li>
-                                <li><a href="AddNewEmployee.html">And New Employee</a></li>
                                 <li class="active"><a href="CreateBooking.html">Create Booking</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Admin<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="../Admin/AddNewEmployee.html">Add New Employee</a></li>
+                                <li><a href="../Admin/ExistingEmployees.html">Manage Existing Employees</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -58,6 +64,17 @@
                 <h1>Create Booking</h1>
                 <form class="form-horizontal" role="form" id="formBooking">
                     <div class="form-group">
+                        <label class="control-label col-xs-4 col-md-6" for="selCustomer">Customer:</label>
+                        <div class="col-xs-8 col-md-6">
+                            <select class="form-control" id="selCustomer">
+                                <option value="0" selected="selected">Choose customer</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button id="showCustomerModal" type="button" class="btn pull-right">Create new Customer</button>
+                    <br />
+                    <br />
+                    <div class="form-group">
                         <label class="control-label col-xs-4 col-md-6" for="startDate">Start date:</label>
                         <div class="col-xs-8 col-md-6">
                             <input class="form-control" id="startDate" type="date" placeholder="DD-MM-YYYY">
@@ -70,17 +87,12 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-xs-4 col-md-6" for="customerAddress">Customer address:</label>
+                        <label class="control-label col-xs-4 col-md-6" for="address">Address:</label>
                         <div class="col-xs-8 col-md-6">
-                            <input class="form-control" id="customerAddress" type="text" placeholder="Customer address" />
+                            <input class="form-control" id="address" type="text" placeholder="Address" />
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="control-label col-xs-4 col-md-6" for="customerPhonenumber">Customer phonenumber:</label>
-                        <div class="col-xs-8 col-md-6">
-                            <input class="form-control" id="customerPhonenumber" type="text" placeholder="12345678" />
-                        </div>
-                    </div>
+                
                     <div class="form-group">
                         <label class="control-label col-xs-4 col-md-6" for="description">Booking description:</label><br />
                         <div class="col-xs-12 col-md-6">
@@ -107,11 +119,15 @@
                 </form>
                 <div id="existingTags" class="container-fluid tag-container">
                 </div>
-                <div><button id="showModal" type="button" class="btn pull-right">Create new tag</button></div>
+                <div><button id="showTagModal" type="button" class="btn pull-right">Create new tag</button></div>
             </div>
         </div>
     </div>
-    <!-- Modal HTML -->
+    <div id="tagInfo" hidden="hidden">
+        <div id="tagInfoHead"></div>
+        <div id="tagInfoDescription"></div>
+    </div>
+    <!-- Tag Modal -->
     <div id="tagModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -141,9 +157,47 @@
             </div>
         </div>
     </div>
-    <div id="tagInfo" hidden="hidden">
-        <div id="tagInfoHead"></div>
-        <div id="tagInfoDescription"></div>
+    <!--Customer Modal-->
+    <div id="customerModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Create new customer</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form" id="formBooking">
+                        <div class="form-group">
+                            <label class="control-label col-xs-4 col-md-6" for="customerName">Customer name:</label>
+                            <div class="col-xs-8 col-md-6">
+                                <input class="form-control" id="customerName" type="text" placeholder="Customer name" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-4 col-md-6" for="customerAddress">Customer address:</label>
+                            <div class="col-xs-8 col-md-6">
+                                <input class="form-control" id="customerAddress" type="text" placeholder="Customer address" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-4 col-md-6" for="customerPhone">Customer phonenumber:</label>
+                            <div class="col-xs-8 col-md-6">
+                                <input class="form-control" id="customerPhone" type="text" placeholder="Customer phonenumber" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-4 col-md-6" for="customerEmail">Customer email:</label>
+                            <div class="col-xs-8 col-md-6">
+                                <input class="form-control" id="customerEmail" type="text" placeholder="mail@domain.dk" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button id="createCustomer" type="button" class="btn btn-primary">Create Customer</button>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>

@@ -32,4 +32,8 @@ public class DataContext : DbContext {
         get;
         set;
     }
+    public DbSet<Customer> Customers {
+        get;
+        set;
+    }
 }

@@ -7,7 +7,6 @@ using System.Web;
 /// Summary description for Booking
 /// </summary>
 public class Booking {
-    //private List<Tag> tags;
     public Booking() {
         Tags = new List<Tag>();
     }
@@ -27,14 +26,6 @@ public class Booking {
         get;
         set;
     }
-    public string CustomerAddress {
-        get;
-        set;
-    }
-    public int CustomerPhone {
-        get;
-        set;
-    }
 
     public BookingState BookingState {
         get;
@@ -49,7 +40,14 @@ public class Booking {
         get;
         set;
     }
-    //public void AddTag(Tag tag) {
-    //    tags.Add(tag);
-    //}
+
+    public string Address {
+        get;
+        set;
+    }
+
+    public Customer Customer {
+        get;
+        set;
+    }
 }
