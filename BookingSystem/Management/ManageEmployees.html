@@ -7,6 +7,8 @@
     <link href="../Content/bootstrap.min.css" rel="stylesheet" />
     <link href="../Content/bootstrap-theme.min.css" rel="stylesheet" />
     <script src="../Scripts/LoginCode.js"></script>
+    <script src="../Scripts/ManageBookings.js"></script>
+    <link href="../Content/CustomStyles.css" rel="stylesheet" />
 </head>
 <body>
     <div class="container">
@@ -60,6 +62,200 @@
         <div>
             <h1> Text about something</h1>
         </div>
+        <div>
+            <table id="Unscheduled">
+                <caption>Unscheduled</caption>
+                <tbody>
+                    <tr>
+                        <td id="A" data-rows="2" data-url="">
+                            Item A
+                            <a href="">✖</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="B" data-rows="3" data-url="">
+                            Item B
+                            <a href="">✖</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="D" data-rows="4" data-url="">
+                            Item D
+                            <a href="">✖</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table id="Scheduled">
+                <caption>Scheduled</caption>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>John Doe</th>
+                        <th>Jane Doe</th>
+                        <th>John Smith</th>
+                        <th>Jane Smith</th>
+                        <th>John Roberts</th>
+                        <th>Jane Roberts</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-time="12:00 AM">
+                        <th scope="row">12:00 AM</th>
+                        <td id="C" data-rows="1" data-url="">
+                            Item C
+                            <a href="">✖</a>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <th scope="row">12:00 AM</th>
+                    </tr>
+                    <tr data-time="12:30 AM">
+                        <th scope="row">12:30 AM</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <th scope="row">12:30 AM</th>
+                    </tr>
+                    <tr data-time="1:00 AM">
+                        <th scope="row">1:00 AM</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <th scope="row">1:00 AM</th>
+                    </tr>
+                    <tr data-time="1:30 AM">
+                        <th scope="row">1:30 AM</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <th scope="row">1:30 AM</th>
+                    </tr>
+                    <tr data-time="2:00 AM">
+                        <th scope="row">2:00 AM</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <th scope="row">2:00 AM</th>
+                    </tr>
+                    <tr data-time="2:30 AM">
+                        <th scope="row">2:30 AM</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <th scope="row">2:30 AM</th>
+                    </tr>
+                    <tr data-time="3:00 AM">
+                        <th scope="row">3:00 AM</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <th scope="row">3:00 AM</th>
+                    </tr>
+                    <tr data-time="3:30 AM">
+                        <th scope="row">3:30 AM</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <th scope="row">3:30 AM</th>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th></th>
+                        <th>John Doe</th>
+                        <th>Jane Doe</th>
+                        <th>John Smith</th>
+                        <th>Jane Smith</th>
+                        <th>John Roberts</th>
+                        <th>Jane Roberts</th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <hr />
+        <p>
+            <label>Status</label>
+            <b></b>
+        </p>
+        <hr />
+        <div>
+            <table>
+                <caption>Right Shift</caption>
+                <thead>
+                    <tr>
+                        <th>Source</th>
+                        <th></th>
+                        <th>Target</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>0</td>
+                        <td>→</td>
+                        <td>1</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td>Show</td>
+                        <td></td>
+                        <td>Hide</td>
+                    </tr>
+                </tfoot>
+            </table>
+            <table>
+                <caption>Left Shift</caption>
+                <thead>
+                    <tr>
+                        <th>Target</th>
+                        <th></th>
+                        <th>Source</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>0</td>
+                        <td>←</td>
+                        <td>1</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td>Hide</td>
+                        <td></td>
+                        <td>Show</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
     </div>
 </body>
 </html>

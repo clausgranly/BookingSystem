@@ -9,18 +9,72 @@
     cursor: pointer
 }
 
-#tagInfo{
+#/*#region drag and drop css */
+tagInfo {
     width: 200px;
     border: solid;
-    border-color:black;
-    border-width:2px;
+    border-color: black;
+    border-width: 2px;
 }
 
-#tagInfoHead{
-    background-color:#008AE6;
+#tagInfoHead {
+    background-color: #008AE6;
     font-weight: bold;
 }
 
-#tagInfoDescription{
-    background-color:#9BE6FF;
+#tagInfoDescription {
+    background-color: #9BE6FF;
 }
+
+
+table {
+    border-collapse: collapse;
+    margin: 32px;
+}
+
+th, td {
+    border: 1px solid #CCC;
+    padding: 4px;
+}
+
+th {
+    color: red;
+}
+
+td.Droppable {
+    background-color: #EEE;
+}
+
+div table {
+    display: inline-block;
+    vertical-align: top;
+}
+
+    div table:first-child {
+        margin-right: 0;
+    }
+
+hr {
+    border: none;
+    border-top: 1px solid #CCC;
+    margin: 0 32px;
+}
+
+p {
+    margin: 8px 32px;
+}
+
+    p label {
+        display: inline-block;
+        width: 100px;
+    }
+
+[draggable] {
+    cursor: move;
+}
+
+#Unscheduled a {
+    display: none;
+}
+
+/*#endregion */
