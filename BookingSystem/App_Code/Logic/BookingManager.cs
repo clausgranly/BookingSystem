@@ -26,6 +26,7 @@ public class BookingManager {
 
     public bool StoreBooking(Booking booking, int customerId, string tagIds) {
         using (DataContext ctx = new DataContext()) {
+            booking.BookingState = BookingState.UNPLANNED;
             try {
                 string[] ids = tagIds.Split(';');
                 foreach (string s in ids) {
@@ -101,6 +102,31 @@ public class BookingManager {
         using (DataContext ctx = new DataContext()) {
             try {
                 return GetCustomerById(id, ctx);
+            } catch (Exception e) {
+                throw e;
+            }
+        }
+    }
+
+    public List<Booking> GetBookingsByDate(DateTime date) {
+        using (DataContext ctx = new DataContext()) {
+            try {
+                return ctx.Bookings.ToList();
+            } catch (Exception e) {
+                throw e;
+            }
+        }
+    }
+
+    public bool PlanBooking(DateTime scheduledDate, int bookingId, int employeeId) {
+        using (DataContext ctx = new DataContext()) {
+            try {
+                Booking booking = ctx.Bookings.Where(b => b.Id == bookingId).FirstOrDefault();
+                booking.SchedueledStartDate = scheduledDate;
+                Employee employee = ctx.Employees.Where(e => e.Id == employeeId).FirstOrDefault();
+                booking.Employee = employee;
+                //employee.Bookings.Add(booking);
+                return ctx.SaveChanges() > 0;
             } catch (Exception e) {
                 throw e;
             }

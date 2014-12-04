@@ -12,6 +12,8 @@ public partial class Management_CreateBooking : System.Web.UI.Page {
     private static BookingManager bookingManager = BookingManager.Instance;
     protected void Page_Load(object sender, EventArgs e) {
         //Test();
+        //CreateBooking(@"{""StratDate\"": ""\/Date(NaN)\/\"", ""EstimatedDuration"": 5, ""Address"": ""q"", ""Description"": ""q""}", 1, "1");
+
         //CreateTag(@"{""Name"":""tag0"",""Description"":""tag00""}");
     }
     [WebMethod]

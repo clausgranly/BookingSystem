@@ -9,7 +9,7 @@
     cursor: pointer
 }
 
-#/*#region drag and drop css */
+/*#region drag and drop css */
 tagInfo {
     width: 200px;
     border: solid;
@@ -73,8 +73,15 @@ p {
     cursor: move;
 }
 
-#Unscheduled a {
+#unscheduled a {
     display: none;
 }
 
+#unscheduled .booking{
+    background-color: blue;
+}
+
+#scheduled .booking{
+    background-color: green;
+}
 /*#endregion */

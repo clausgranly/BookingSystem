@@ -15,12 +15,15 @@ bookingCode = {
         $('#a1').click(bookingCode.test);
     },
     createBooking: function () {
+        var name = $('#name').val()
         var start = $('#startDate').val().split('-');
-        var startDate = new Date(start[2], start[1] - 1, start[0]).getTime();
+        startDate = new Date(start[2], start[1] - 1, start[0]);
+        startDate.setHours(startDate.getHours() + 1);
+        startDate = startDate.getTime();
         var estimatedDuration = $('#estimatedDuration').val();
         var description = $('#description').val();
         var address = $('#address').val();
-        var josnBooking = '{ "StratDate": "\\\/Date(' + startDate + ')\\\/", "EstimatedDuration": ' + estimatedDuration + ', "Address": "' + address + '", "Description": "' + description + '"}';
+        var josnBooking = '{ "Name": "' + name + '","StratDate": "\\\/Date(' + startDate + ')\\\/", "EstimatedDuration": ' + estimatedDuration + ', "Address": "' + address + '", "Description": "' + description + '"}';
         var customerId = $('#selCustomer').find(":selected").attr('data-customerId');
         var tagIds = '';
         pendingTags = $('#pendingTags').children();
