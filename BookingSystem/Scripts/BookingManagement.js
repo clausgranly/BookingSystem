@@ -93,6 +93,19 @@ dragAndDrop = {
         $(booking).before($(dragAndDrop.createUnscheduledTd()));
         booking.removeAttr('rowspan');
         $('#unscheduled tbody').append($('<tr>').append(booking));
+        $.ajax({
+            type: 'POST',
+            url: 'ManageBookings.aspx/UnBookBooking',
+            data: '{"bookingId": '+booking.attr('id')+'}',
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                alert(response.d);
+            },
+            failure: function (response) {
+                alert('Failure: ' + response.d);
+            }
+        });
+
     },
 }
 
@@ -109,7 +122,7 @@ bookings = {
             contentType: 'application/json; charset=utf-8',
             success: function (response) {
                 for (var i = 0; i < response.d.length; i++) {
-                    bookings.insertIntoTabel(response.d[i]);
+                    bookings.insertIntoTabel(response.d[i][1], response.d[i][0]);
                 }
             },
             failure: function (response) {
@@ -118,17 +131,33 @@ bookings = {
         });
     },
 
-    insertIntoTabel: function (booking) {
+    insertIntoTabel: function (booking, id) {
         var td = bookings.createBookingTag(booking);
         if (booking.BookingState == 0) {
             var tr = $('<tr>');
             tr.append(td);
             $('#unscheduled tbody').append(tr);
-        } else {
-            //for (var i = 1; i < bookingRows; i++) {
-            //    $(targetTbody).children().eq(targetRow + i).children().eq(targetColumn).hide();
-            //}
-            //$(e.target).replaceWith(booking);
+        }
+        else {
+            var schedueledStartDate = new Date(parseInt(booking.SchedueledStartDate.substr(6)));
+            if (schedueledStartDate.getHours() < 10) {
+                var time = '0' + schedueledStartDate.getHours() + ':' + schedueledStartDate.getMinutes();
+            } else {
+                var time = schedueledStartDate.getHours() + ':' + schedueledStartDate.getMinutes();
+            }
+            if (schedueledStartDate.getMinutes() == 0) {
+                time = time + '0';
+            }
+
+            var bookingRows = Math.ceil(booking.EstimatedDuration * 2);
+            var targetRow = $('#scheduled tbody').find('tr[data-time="' + time + '"]');
+            var trIndex = targetRow.parent().children().index(targetRow);
+            var targetColumn = $('#scheduled thead').find('th[data-employeeid="' + id + '"]');
+            var tdIndex = $('#scheduled thead').children().index(targetColumn);
+            for (var i = 1; i < bookingRows; i++) {
+                $('#scheduled tbody').children().eq(trIndex + i).children().eq(tdIndex).hide();
+            }
+            $('#scheduled tbody').children().eq(trIndex).children().eq(tdIndex).replaceWith(bookings.createBookingTag(booking));
         }
     },
 
@@ -151,6 +180,7 @@ bookings = {
             td.attr('data-booked', true);
         } else if (booking.BookingState == (1)) {
             td.attr('data-booked', true);
+            td.attr('rowspan', rows)
         }
         return td;
     },
@@ -207,8 +237,7 @@ bookings = {
         var scheduledDate = ($('#scheduledDate').text().split('-'));
         var hourMin = booking.parent().attr('data-time').split(':');
 
-        scheduledDate = new Date(scheduledDate[2], scheduledDate[1] - 1, scheduledDate[0],hourMin[0],hourMin[1],0,0);
-        alert(scheduledDate)
+        scheduledDate = new Date(scheduledDate[2], scheduledDate[1] - 1, scheduledDate[0], hourMin[0], hourMin[1], 0, 0);
         scheduledDate = scheduledDate.getTime();
         var bookingId = booking.attr('id');
         var employeeId = $('#scheduled thead').find('th').eq(dragAndDrop.indices(booking)[1]).attr('data-employeeId');
@@ -218,7 +247,6 @@ bookings = {
             data: '{"scheduledDate": "\\\/Date(' + scheduledDate + ')\\\/","bookingId":' + bookingId + ',"employeeId":' + employeeId + '}',
             contentType: 'application/json; charset=utf-8',
             success: function (response) {
-                alert(response.d)
             },
             failure: function (response) {
                 alert('Failure: ' + response.d);

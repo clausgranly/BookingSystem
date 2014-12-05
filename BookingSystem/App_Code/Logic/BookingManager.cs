@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-
+using System.Data.Entity;
 /// <summary>
 /// Summary description for BookingManager
 /// </summary>
@@ -118,14 +118,54 @@ public class BookingManager {
         }
     }
 
+    public object[] GetBookingsWithEmployeeId() {
+        using (DataContext ctx = new DataContext()) {
+            try {
+                List<Booking> bl = ctx.Bookings.Include(b => b.Employee).ToList();
+                object[] list = new object[bl.Count];
+                int i = 0;
+                foreach (Booking booking in bl) {
+                    object[] array = new object[2];
+                    if (booking.Employee != null) {
+                        array[0] = booking.Employee.Id;
+                        booking.Employee = null;
+                    } else {
+                        array[0] = -1;
+                    }
+                    array[1] = booking;
+                    list[i] = array;
+                    i++;
+                }
+                return list;
+            } catch (Exception e) {
+                throw e;
+            }
+        }
+    }
+
     public bool PlanBooking(DateTime scheduledDate, int bookingId, int employeeId) {
         using (DataContext ctx = new DataContext()) {
             try {
                 Booking booking = ctx.Bookings.Where(b => b.Id == bookingId).FirstOrDefault();
                 booking.SchedueledStartDate = scheduledDate;
+                booking.BookingState = BookingState.PLANNED;
                 Employee employee = ctx.Employees.Where(e => e.Id == employeeId).FirstOrDefault();
                 booking.Employee = employee;
                 //employee.Bookings.Add(booking);
+                return ctx.SaveChanges() > 0;
+            } catch (Exception e) {
+                throw e;
+            }
+        }
+    }
+
+    public bool UnBookBooking(int bookingId) {
+        using (DataContext ctx = new DataContext()) {
+            try {
+                Booking booking = ctx.Bookings.Where(b => b.Id == bookingId).FirstOrDefault();
+                booking.Employee = null;
+                booking.BookingState = BookingState.UNPLANNED;
+                booking.SchedueledStartDate = new DateTime(1753, 1, 1);
                 return ctx.SaveChanges() > 0;
             } catch (Exception e) {
                 throw e;
